@@ -47,11 +47,6 @@ class User implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $motDePasse;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $adresse;
@@ -188,18 +183,6 @@ class User implements UserInterface
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getMotDePasse(): ?string
-    {
-        return $this->motDePasse;
-    }
-
-    public function setMotDePasse(string $motDePasse): self
-    {
-        $this->motDePasse = $motDePasse;
 
         return $this;
     }
