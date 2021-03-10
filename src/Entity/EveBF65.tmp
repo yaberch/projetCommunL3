@@ -1,0 +1,143 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\EvenementRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=EvenementRepository::class)
+ */
+class Evenement
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $duree;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbPlace;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $typeDeMusique;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="evenements")
+     */
+    private $Lieu;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getDuree(): ?\DateTimeInterface
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(\DateTimeInterface $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    public function getNbPlace(): ?int
+    {
+        return $this->nbPlace;
+    }
+
+    public function setNbPlace(int $nbPlace): self
+    {
+        $this->nbPlace = $nbPlace;
+
+        return $this;
+    }
+
+    public function getTypeDeMusique(): ?string
+    {
+        return $this->typeDeMusique;
+    }
+
+    public function setTypeDeMusique(string $typeDeMusique): self
+    {
+        $this->typeDeMusique = $typeDeMusique;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->Lieu;
+    }
+
+    public function setLieu(?Lieu $Lieu): self
+    {
+        $this->Lieu = $Lieu;
+
+        return $this;
+    }
+}

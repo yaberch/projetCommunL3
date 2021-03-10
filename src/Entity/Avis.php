@@ -20,7 +20,7 @@ class Avis
     /**
      * @ORM\Column(type="integer")
      */
-    private $notes;
+    private $note;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -32,19 +32,24 @@ class Avis
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Evenement::class, inversedBy="avis")
+     */
+    private $evenement;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNotes(): ?int
+    public function getNote(): ?int
     {
-        return $this->notes;
+        return $this->note;
     }
 
-    public function setNotes(int $notes): self
+    public function setNote(int $note): self
     {
-        $this->notes = $notes;
+        $this->note = $note;
 
         return $this;
     }
@@ -69,6 +74,18 @@ class Avis
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
 
         return $this;
     }

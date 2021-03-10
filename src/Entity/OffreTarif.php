@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\OffreRepository;
+use App\Repository\OffreTarifRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=OffreRepository::class)
+ * @ORM\Entity(repositoryClass=OffreTarifRepository::class)
  */
-class Offre
+class OffreTarif
 {
     /**
      * @ORM\Id
@@ -28,9 +28,14 @@ class Offre
     private $libelle;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $categorie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Evenement::class, inversedBy="offreTarifs")
+     */
+    private $evenement;
 
     public function getId(): ?int
     {
@@ -66,9 +71,21 @@ class Offre
         return $this->categorie;
     }
 
-    public function setCategorie(string $categorie): self
+    public function setCategorie(?string $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
 
         return $this;
     }

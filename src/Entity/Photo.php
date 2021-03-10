@@ -18,45 +18,61 @@ class Photo
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $date;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
-    private $lieu;
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $type;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $path;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateAjout;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Evenement::class, inversedBy="photos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $evenement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Photographe::class, inversedBy="photos")
+     */
+    private $photographe;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getNom(): ?string
     {
-        return $this->date;
+        return $this->nom;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setNom(string $nom): self
     {
-        $this->date = $date;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getLieu(): ?string
+    public function getType(): ?string
     {
-        return $this->lieu;
+        return $this->type;
     }
 
-    public function setLieu(string $lieu): self
+    public function setType(?string $type): self
     {
-        $this->lieu = $lieu;
+        $this->type = $type;
 
         return $this;
     }
@@ -69,6 +85,42 @@ class Photo
     public function setPath(string $path): self
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function getDateAjout(): ?\DateTimeInterface
+    {
+        return $this->dateAjout;
+    }
+
+    public function setDateAjout(\DateTimeInterface $dateAjout): self
+    {
+        $this->dateAjout = $dateAjout;
+
+        return $this;
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
+
+        return $this;
+    }
+
+    public function getPhotographe(): ?Photographe
+    {
+        return $this->photographe;
+    }
+
+    public function setPhotographe(?Photographe $photographe): self
+    {
+        $this->photographe = $photographe;
 
         return $this;
     }

@@ -3,17 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({
- *     "organisateur" = "Organisateur"
- *     "client" = "Client"
- * })
  */
 class User implements UserInterface
 {
@@ -53,22 +49,43 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $motDePasse;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $ville;
-
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private $codePostal;
-
-    /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $telephone;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $cni;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Evenement::class, mappedBy="participants")
+     */
+    private $participeA;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Evenement::class, mappedBy="organisateur")
+     */
+    private $aOrganise;
+
+    public function __construct()
+    {
+        $this->participeA = new ArrayCollection();
+        $this->aOrganise = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -175,38 +192,26 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getMotDePasse(): ?string
+    {
+        return $this->motDePasse;
+    }
+
+    public function setMotDePasse(string $motDePasse): self
+    {
+        $this->motDePasse = $motDePasse;
+
+        return $this;
+    }
+
     public function getAdresse(): ?string
     {
         return $this->adresse;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
-
-    public function setVille(string $ville): self
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getCodePostal(): ?string
-    {
-        return $this->codePostal;
-    }
-
-    public function setCodePostal(string $codePostal): self
-    {
-        $this->codePostal = $codePostal;
 
         return $this;
     }
@@ -216,9 +221,90 @@ class User implements UserInterface
         return $this->telephone;
     }
 
-    public function setTelephone(string $telephone): self
+    public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getCni(): ?string
+    {
+        return $this->cni;
+    }
+
+    public function setCni(?string $cni): self
+    {
+        $this->cni = $cni;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Evenement[]
+     */
+    public function getParticipeA(): Collection
+    {
+        return $this->participeA;
+    }
+
+    public function addParticipeA(Evenement $participeA): self
+    {
+        if (!$this->participeA->contains($participeA)) {
+            $this->participeA[] = $participeA;
+            $participeA->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipeA(Evenement $participeA): self
+    {
+        if ($this->participeA->removeElement($participeA)) {
+            $participeA->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Evenement[]
+     */
+    public function getAOrganise(): Collection
+    {
+        return $this->aOrganise;
+    }
+
+    public function addAOrganise(Evenement $aOrganise): self
+    {
+        if (!$this->aOrganise->contains($aOrganise)) {
+            $this->aOrganise[] = $aOrganise;
+            $aOrganise->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAOrganise(Evenement $aOrganise): self
+    {
+        if ($this->aOrganise->removeElement($aOrganise)) {
+            // set the owning side to null (unless already changed)
+            if ($aOrganise->getOrganisateur() === $this) {
+                $aOrganise->setOrganisateur(null);
+            }
+        }
 
         return $this;
     }

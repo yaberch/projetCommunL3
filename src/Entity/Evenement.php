@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EvenementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,157 +22,354 @@ class Evenement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nomSoiree;
+    private $nom;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
-    private $jourEvent;
-
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $heureDebut;
+    private $date;
 
     /**
      * @ORM\Column(type="time")
      */
-    private $heureFin;
+    private $duree;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      */
-    private $noteMoyenne;
+    private $nbPlace;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $typeMusique;
+    private $typeDeMusique;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $insta;
+    private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="evenements")
      */
-    private $facebook;
+    private $lieu;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="participeA")
      */
-    private $snap;
+    private $participants;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="aOrganise")
+     */
+    private $organisateur;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Avis::class, mappedBy="evenement")
+     */
+    private $avis;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="videos")
+     */
+    private $photos;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="evenement")
+     */
+    private $reservations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="evenement")
+     */
+    private $videos;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OffreTarif::class, mappedBy="evenement")
+     */
+    private $offreTarifs;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+        $this->avis = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+        $this->offreTarifs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNomSoiree(): ?string
+    public function getNom(): ?string
     {
-        return $this->nomSoiree;
+        return $this->nom;
     }
 
-    public function setNomSoiree(string $nomSoiree): self
+    public function setNom(string $nom): self
     {
-        $this->nomSoiree = $nomSoiree;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getJourEvent(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->jourEvent;
+        return $this->date;
     }
 
-    public function setJourEvent(\DateTimeInterface $jourEvent): self
+    public function setDate(\DateTimeInterface $date): self
     {
-        $this->jourEvent = $jourEvent;
+        $this->date = $date;
 
         return $this;
     }
 
-    public function getHeureDebut(): ?\DateTimeInterface
+    public function getDuree(): ?\DateTimeInterface
     {
-        return $this->heureDebut;
+        return $this->duree;
     }
 
-    public function setHeureDebut(\DateTimeInterface $heureDebut): self
+    public function setDuree(\DateTimeInterface $duree): self
     {
-        $this->heureDebut = $heureDebut;
+        $this->duree = $duree;
 
         return $this;
     }
 
-    public function getHeureFin(): ?\DateTimeInterface
+    public function getNbPlace(): ?int
     {
-        return $this->heureFin;
+        return $this->nbPlace;
     }
 
-    public function setHeureFin(\DateTimeInterface $heureFin): self
+    public function setNbPlace(int $nbPlace): self
     {
-        $this->heureFin = $heureFin;
+        $this->nbPlace = $nbPlace;
 
         return $this;
     }
 
-    public function getNoteMoyenne(): ?float
+    public function getTypeDeMusique(): ?string
     {
-        return $this->noteMoyenne;
+        return $this->typeDeMusique;
     }
 
-    public function setNoteMoyenne(float $noteMoyenne): self
+    public function setTypeDeMusique(string $typeDeMusique): self
     {
-        $this->noteMoyenne = $noteMoyenne;
+        $this->typeDeMusique = $typeDeMusique;
 
         return $this;
     }
 
-    public function getTypeMusique(): ?string
+    public function getDescription(): ?string
     {
-        return $this->typeMusique;
+        return $this->description;
     }
 
-    public function setTypeMusique(string $typeMusique): self
+    public function setDescription(?string $description): self
     {
-        $this->typeMusique = $typeMusique;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getInsta(): ?string
+    public function getLieu(): ?Lieu
     {
-        return $this->insta;
+        return $this->lieu;
     }
 
-    public function setInsta(?string $insta): self
+    public function setLieu(?Lieu $lieu): self
     {
-        $this->insta = $insta;
+        $this->lieu = $lieu;
 
         return $this;
     }
 
-    public function getFacebook(): ?string
+    /**
+     * @return Collection|User[]
+     */
+    public function getParticipants(): Collection
     {
-        return $this->facebook;
+        return $this->participants;
     }
 
-    public function setFacebook(?string $facebook): self
+    public function addParticipant(User $participant): self
     {
-        $this->facebook = $facebook;
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+        }
 
         return $this;
     }
 
-    public function getSnap(): ?string
+    public function removeParticipant(User $participant): self
     {
-        return $this->snap;
+        $this->participants->removeElement($participant);
+
+        return $this;
     }
 
-    public function setSnap(?string $snap): self
+    public function getOrganisateur(): ?User
     {
-        $this->snap = $snap;
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?User $organisateur): self
+    {
+        $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Avis[]
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): self
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis[] = $avi;
+            $avi->setEvenement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): self
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getEvenement() === $this) {
+                $avi->setEvenement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Photo[]
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): self
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos[] = $photo;
+            $photo->setVideos($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): self
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getVideos() === $this) {
+                $photo->setVideos(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setEvenement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getEvenement() === $this) {
+                $reservation->setEvenement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setEvenement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getEvenement() === $this) {
+                $video->setEvenement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OffreTarif[]
+     */
+    public function getOffreTarifs(): Collection
+    {
+        return $this->offreTarifs;
+    }
+
+    public function addOffreTarif(OffreTarif $offreTarif): self
+    {
+        if (!$this->offreTarifs->contains($offreTarif)) {
+            $this->offreTarifs[] = $offreTarif;
+            $offreTarif->setEvenement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffreTarif(OffreTarif $offreTarif): self
+    {
+        if ($this->offreTarifs->removeElement($offreTarif)) {
+            // set the owning side to null (unless already changed)
+            if ($offreTarif->getEvenement() === $this) {
+                $offreTarif->setEvenement(null);
+            }
+        }
 
         return $this;
     }
