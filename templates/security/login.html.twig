@@ -6,30 +6,11 @@
 
 {% block body %}
 
-    {% if app.user %}
-    {% else %}
-    {% endif %}
 
 
-    <section class="hero-wrap-loginregister" style="background-image: url('img/login.jpg');">
-        <div class="overlay"></div>
-        <div class="container mt-5">
-            <div class="row no-gutters justify-content-center">
-                <div class="col-md-12">
-                    <div class="wrapper">
-                        <div class="row g-0">
-                            <div class="col-lg-6 offset-lg-0">
-                                <div class="contact-wrap w-100 p-md-5 p-4 pt-5">
 
-                                    {% if error %}
-                                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                    {% endif %}
 
-                                    {% if app.user %}
-                                        <div class="mb-3">
-                                            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                                        </div>
-                                    {% endif %}
+
 
                                     <h3>Connexion</h3>
                                     <p class="mb-4">Bienvenue cher ami</p>
