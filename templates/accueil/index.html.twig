@@ -1,0 +1,28 @@
+{% block head %}
+    <title>Projet Commun</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ 'e.css' }}" type="text/css">
+{% endblock %}
+
+{% block title %}liste des evenements{% endblock %}
+
+{% block body %}
+
+    <h1>Evenements de la semaine</h1>
+
+        {% for event in eventsList %}
+            <table class="table">
+                <tr><td>{{ event.nom }}</td></tr>
+                <tr><td>Le {{ event.date|date('d-m-Y') }}</td></tr>
+                <tr><td>Pour une durée de {{ event.duree|date('h') }}h</td></tr>
+                <tr><td>{{ event.nbPlace }} places pour chill</td></tr>
+                <tr><td>Musique:{{ event.typeDeMusique }}</td></tr>
+                <tr><td>{{ event.description }}</td></tr>
+                <tr>
+                    <td></td>
+                    <td><a href="afficher_un_evenement">Voir plus</a></td>
+                </tr>
+            </table>
+        {% endfor %}
+
+{% endblock %}
