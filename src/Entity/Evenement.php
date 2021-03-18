@@ -70,7 +70,7 @@ class Evenement
     private $avis;
 
     /**
-     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="videos")
+     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="evenement")
      */
     private $photos;
 
@@ -266,7 +266,7 @@ class Evenement
     {
         if (!$this->photos->contains($photo)) {
             $this->photos[] = $photo;
-            $photo->setVideos($this);
+            $photo->setEvenement($this);
         }
 
         return $this;
@@ -276,8 +276,8 @@ class Evenement
     {
         if ($this->photos->removeElement($photo)) {
             // set the owning side to null (unless already changed)
-            if ($photo->getVideos() === $this) {
-                $photo->setVideos(null);
+            if ($photo->getEvenement() === $this) {
+                $photo->setEvenement(null);
             }
         }
 

@@ -76,10 +76,19 @@ class User implements UserInterface
      */
     private $aOrganise;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
     public function __construct()
     {
+        $this->roles = ['ROLE_USER'];
         $this->participeA = new ArrayCollection();
         $this->aOrganise = new ArrayCollection();
+        $this->cni = new ArrayCollection();
+        $this->isVerified= false ;
+
     }
 
     public function getId(): ?int
@@ -249,6 +258,18 @@ class User implements UserInterface
             $this->participeA[] = $participeA;
             $participeA->addParticipant($this);
         }
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }

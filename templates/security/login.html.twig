@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Se connecter{% endblock %}
+
+
+{% block body %}
+
+
+
+
+
+
+
+                                    <h3>Connexion</h3>
+                                    <p class="mb-4">Bienvenue cher ami</p>
+                                    <div class="row mb-4">
+                                    </div>
+
+
+                                    <form id="contactForm" name="contactForm" class="contactForm" method="post">
+                                        <div class="row pt-2">
+                                            <div class="col-md-12">
+                                                <div class="form-group pb-2">
+                                                    <input type="email" class="form-control" name="email" id="email" placeholder="xyz@something.com" value="{{ last_username }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group pb-2">
+                                                    <input type="password" class="form-control" name="password" id="password" placeholder="Mot de passe">
+                                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group pb-2">
+                                                    <input type="submit" value="connexion" class="btn btn-primary mb-2 mt-3">
+                                                    <div class="submitting"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+{% endblock %}
