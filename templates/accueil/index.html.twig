@@ -1,8 +1,4 @@
-{% block head %}
-    <title>Projet Commun</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ 'e.css' }}" type="text/css">
-{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block title %}liste des evenements{% endblock %}
 
@@ -20,7 +16,7 @@
                 <tr><td>{{ event.description }}</td></tr>
                 <tr>
                     <td></td>
-                    <td><a href="afficher_un_evenement">Voir plus</a></td>
+                    <td><a href={{ path('accueil.show', {id: event.id}) }}>Voir plus</a></td>
                 </tr>
             </table>
         {% endfor %}
