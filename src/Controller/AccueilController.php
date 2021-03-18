@@ -6,15 +6,12 @@ use App\Entity\Evenement;
 use App\Entity\Photo;
 use App\Entity\Video;
 use App\Entity\Avis;
-use App\Form\EventType;
-use App\Security\LoginUserAuthenticator;
-use Laminas\EventManager\Event;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Routing\Annotation\Route; 
+
+use App\Form\LaisserAvisType;
+use Symfony\Component\HttpFoundation\Request;
 
 class AccueilController extends AbstractController
 {
@@ -33,11 +30,13 @@ class AccueilController extends AbstractController
     /**
      * @Route("/accueil/{id}", name="accueil.show")
      */
-    public function show($id): Response
+    public function show(Request $request, $id): Response
     {
         $evenement = $this->getDoctrine()->getRepository(Evenement::class) -> find($id);
         $photosEvenement = $this->getDoctrine()->getRepository(Photo::class) -> findBy(array('evenement' => $id));
         $avisEvenement = $this->getDoctrine()->getRepository(Avis::class) -> findBy(array('evenement' => $id));
+
+        
 
         //lieu, avis, offretarfif
 
@@ -53,13 +52,45 @@ class AccueilController extends AbstractController
             $commentaireAvis[] = $avisEvenements->getCommentaire();            
         }
 
-        
+
+
+
+        // on créer un avis
+        $avis = new Avis();
+
+        //on recup le formulaire
+        $formAvis = $this->createForm(LaisserAvisType::class, $avis);
+
+        if('POST' === $request->getMethod()) {
+
+            // on relie le formulaire
+            $formAvis -> handleRequest($request);
+
+                // si le formulaire a été soumis
+                if($formAvis -> isSubmitted()) {
+
+                    $avis->setEvenement($evenement);
+                    $avis->setDate(new \DateTime('now'));
+
+                    // entity manager
+                    $em = $this -> getDoctrine() -> getManager();
+
+                    // lien entre doctrine et l'objet
+                    $em -> persist($avis);
+
+                    // enregistrer dans la bdd
+                    $em->flush();
+                }
+        }        
 
         return $this->render('accueil/show.html.twig', [
             'evenement' => $evenement,
             'nomPhotos' => $nomPhoto,
             'noteAvis' => $noteAvis,
-            'commentaireAvis' => $commentaireAvis
+            'commentaireAvis' => $commentaireAvis,
+
+            'formAvis' => $formAvis->createView(),
+            'idEvenement' => $id 
         ]);
     }
 
