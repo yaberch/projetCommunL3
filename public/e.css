@@ -1,0 +1,7 @@
+.table{
+    border:solid ;
+    border-radius:10px;
+    background-color: rgb(230,255,255);
+    width: 800px;
+    height:200px;
+}

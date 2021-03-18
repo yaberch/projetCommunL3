@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LaisserAvisController!{% endblock %}
+
+{% block body %}
+    <div class="">
+        <!-- Ajout dans la bdd -->
+        {{ form_start(formAvis) }}
+
+        <!-- Add avis -->
+        {{ form_row(formAvis.note)}}
+        {{ form_row(formAvis.commentaire) }}
+
+        <!-- Fin add avis -->
+        {{ form_end(formAvis) }}
+    </div>
+{% endblock %}
