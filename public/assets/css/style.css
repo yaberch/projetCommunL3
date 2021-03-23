@@ -560,7 +560,7 @@ fieldset[disabled] .btn-primary.active {
     font-size: 12px;
 }
 
-.navbar-default .nav li a:hover,
+.navbar-default .nav li a:g,
 .navbar-default .nav li a:focus {
     outline: 0;
     color: #333
