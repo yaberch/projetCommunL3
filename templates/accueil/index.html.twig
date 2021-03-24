@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}liste des evenements{% endblock %}
@@ -6,19 +7,26 @@
 
     <h1>Evenements de la semaine</h1>
 
-        {% for event in eventsList %}
-            <table class="table">
-                <tr><td>{{ event.nom }}</td></tr>
-                <tr><td>Le {{ event.date|date('d-m-Y') }}</td></tr>
-                <tr><td>Pour une durée de {{ event.duree|date('h') }}h</td></tr>
-                <tr><td>{{ event.nbPlace }} places pour chill</td></tr>
-                <tr><td>Musique:{{ event.typeDeMusique }}</td></tr>
-                <tr><td>{{ event.description }}</td></tr>
-                <tr>
-                    <td></td>
-                    <td><a href={{ path('accueil.show', {id: event.id}) }}>Voir plus</a></td>
-                </tr>
-            </table>
-        {% endfor %}
+    {% for event in eventsList %}
+        <table class="table">
+            <tr><td>{{ event.nom }}</td></tr>
+            <tr>
+                <td>{% if event.filename %}
+                        <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="card-img-top" style="width: 30%; height: auto;">
+                    {% endif %}
+                </td>
+            </tr>
+            <tr><td>Le {{ event.date|date('d-m-Y') }}</td></tr>
+            <tr><td>Pour une durée de {{ event.duree|date('h') }}h</td></tr>
+            <tr><td>{{ event.nbPlace }} places pour chill</td></tr>
+            <tr><td>Musique:{{ event.typeDeMusique }}</td></tr>
+            <tr><td>{{ event.description }}</td></tr>
+            <tr>
+                <td></td>
+                <td><a href={{ path('accueil.show', {id: event.id}) }}>Voir plus</a></td>
+            </tr>
+        </table>
+    {% endfor %}
 
 {% endblock %}
+

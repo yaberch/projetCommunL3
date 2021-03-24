@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
     {% block title %}
-        
+
     {% endblock %}
 
 
@@ -14,41 +14,45 @@
             <p>{{ evenement.nbPlace }}</p>
             <p>{{ evenement.typeDeMusique }}</p>
 
-            
+
             <h1>Photos :</h1>
-                <ul>
-                    {% for nomPhoto in nomPhotos %}                    
-                        <li>{{ nomPhoto }}</li>
-                    {% endfor %}
-                </ul>
+            <ul>
+                {% for nomPhoto in nomPhotos %}
+                    <li>{{ nomPhoto }}</li>
+                {% endfor %}
+
+                {% if evenement.filename %}
+                    <img src="{{ vich_uploader_asset(evenement, 'imageFile') }}" alt="card-img-top" style="width: 30%; height: auto;">
+                {% endif %}
+            </ul>
 
             <h1>Avis :</h1>
-                <h2>note :</h2>
-                <ul>
-                    {% for noteAvis in noteAvis %}                    
-                        <li>{{ noteAvis }}</li>
-                    {% endfor %}
-                </ul>  
-                <h2>commentaire :</h2>  
-                <ul>
-                    {% for commentaireAvis in commentaireAvis %}                    
-                        <li>{{ commentaireAvis }}</li>
-                    {% endfor %}
-                </ul>  
+            <h2>note :</h2>
+            <ul>
+                {% for noteAvis in noteAvis %}
+                    <li>{{ noteAvis }}</li>
+                {% endfor %}
+            </ul>
+            <h2>commentaire :</h2>
+            <ul>
+                {% for commentaireAvis in commentaireAvis %}
+                    <li>{{ commentaireAvis }}</li>
+                {% endfor %}
+            </ul>
 
 
-                <!-- Formulaire pour ajouter un avis -->
-                <div class="">
-                    <!-- Ajout dans la bdd -->
-                    {{ form_start(formAvis) }}
+            <!-- Formulaire pour ajouter un avis -->
+            <div class="">
+                <!-- Ajout dans la bdd -->
+                {{ form_start(formAvis) }}
 
-                    <!-- Add avis -->
-                    {{ form_row(formAvis.note)}}
-                    {{ form_row(formAvis.commentaire) }}
+                <!-- Add avis -->
+                {{ form_row(formAvis.note)}}
+                {{ form_row(formAvis.commentaire) }}
 
-                    <!-- Fin add avis -->
-                    {{ form_end(formAvis) }}
-                </div>
+                <!-- Fin add avis -->
+                {{ form_end(formAvis) }}
+            </div>
         </div>
 
 
