@@ -20,6 +20,10 @@
                     {% for nomPhoto in nomPhotos %}                    
                         <li>{{ nomPhoto }}</li>
                     {% endfor %}
+
+                    {% if evenement.filename %}
+                        <img src="{{ vich_uploader_asset(evenement, 'imageFile') }}" alt="card-img-top" style="width: 30%; height: auto;">
+                    {% endif %}
                 </ul>
 
             <h1>Avis :</h1>

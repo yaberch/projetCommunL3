@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\EvenementRepository;
+use App\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File as FileFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=EvenementRepository::class)
+ * @Vich\Uploadable
  */
 class Evenement
 {
@@ -73,6 +77,20 @@ class Evenement
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="evenement")
      */
     private $photos;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string|null
+     */
+    private $filename;
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="event_image", fileNameProperty="filename")
+     * @var FileFile|null
+     */
+    private $imageFile;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="evenement")
@@ -373,4 +391,41 @@ class Evenement
 
         return $this;
     }
+
+    /**
+     * @param null|FileFile $imageFile
+     * @return Evenement
+     */
+    public function setImageFile(?FileFile $imageFile): Evenement
+    {
+        $this->imageFile = $imageFile;
+        return $this;     
+        
+    }
+
+    /** 
+     * @return null|FileFile
+     */
+    public function getImageFile(): ?FileFile
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param null|string $filename
+     * @return Evenement
+     */
+    public function setFileName(?string $filename): void
+    {
+        $this->filename = $filename;
+    }
+
+    /** 
+     * @return null|string
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
 }
