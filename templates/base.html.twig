@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    <link href="{{asset('assets/css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins.css')}}" rel="stylesheet">
+
+    <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/font-awesome-4.1.0/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/pe-icons.css')}}" rel="stylesheet">
+
+
+    {% block stylesheets %}{% endblock %}
+
+    {% include 'fragment/navbar.html.twig' %}
 
 
 </head>
+
 
 <body>
 
@@ -13,7 +29,7 @@
 
 {% endblock %}
 
-
+{% block javascripts %}{% endblock %}
 
 </body>
 
