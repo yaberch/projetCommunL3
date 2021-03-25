@@ -31,11 +31,12 @@
 
 
 {% block javascripts %}
+
+
     <script src="{{ asset('js/stripe/stripe.js') }}"></script>
 
 
     <!-- STRIPE JS -->
-
     <script type="text/javascript">
         // Create an instance of the Stripe object with your publishable API key
         var stripe = Stripe('pk_test_51ITnBKAwi7CWBhUnbgwg5k0Qkbwjd3hXVKjJxWWFenF7rsGkwz6u6NbFmqqgOP7qWwCjHFuWJZmGpT4r11C5cOEZ00QW5YVnIb');
@@ -66,6 +67,8 @@
                 });
         });
     </script>
+
+
 
 {% endblock %}
 

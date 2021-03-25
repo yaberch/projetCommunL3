@@ -8,11 +8,13 @@ use App\Entity\Video;
 use App\Entity\Avis;
 use App\Services\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route; 
 
 use App\Form\LaisserAvisType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AccueilController extends AbstractController
 {
@@ -95,24 +97,83 @@ class AccueilController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/create-checkout-session", name="checkout")
-     */
-    public function checkout(Stripe $stripe)
-    {
-        return $stripe -> checkout();
-    }
+
 
     /**
-     * @Route("/success/{paymentType}", name="success")
+     * @Route("/success", name="success")
      */
-    public function success(String $paymentType, CartGestion $cart)
+    public function success()
     {
-
-        $cart -> createLessons($this->getUser(), $paymentType);
-        return $this->render('index.html.twig', [
+        return $this->render('accueil/success.html.twig', [
         ]);
     }
+
+    /**
+     * @Route("/error", name="error")
+     */
+    public function error()
+    {
+        return $this->render('accueil/error.html.twig', [
+        ]);
+    }
+
+
+
+
+    /**
+     * @Route("/", name="paiement")
+     * @Route("/create-checkout-session", name="checkout")
+     */
+    public function checkout()
+    {
+        \Stripe\Stripe::setApiKey('sk_test_51ITnBKAwi7CWBhUn7MbWJrbhMdyAVyfFSWju5ldKyM1R9Bl1GHkWC8KIYiIefQxNCcaZS5nfn1m0yOrgyMFNU6EV00Cyg1AsfY');
+
+        $session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => 'Soiree',
+                    ],
+                    'unit_amount' => 2000,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => $this->generateUrl('success', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'cancel_url' => $this->generateUrl('error', [], UrlGeneratorInterface::ABSOLUTE_URL),
+        ]);
+        return new JsonResponse(['id' => $session->id ]);
+
+    }
+
+    // Getters ------------------------------------------------------------------------------
+    public function getCart(){
+        return $this -> userSession -> get('cart', []);
+    }
+
+    public function getAmount(){
+        return $this -> userSession -> get('totalAmount', []);
+    }
+
+
+
+    public function getTotalAmount(){
+        $cart = $this -> getCart();
+        $totalAmount = 0;
+        foreach ($cart as $element){
+            $totalAmount = $totalAmount + ($element[3] * $element[2]);
+        }
+        $amount = $this -> getAmount();
+        $amount[0] = round($totalAmount - $amount[1], 2);
+        $this -> userSession -> set('totalAmount', $amount);
+        return $amount[0] ;
+    }
+
+
+
+
 
 
 

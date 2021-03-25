@@ -6,6 +6,9 @@
 
 
     {% block body %}
+
+        <script src="https://js.stripe.com/v3/"></script>
+
         <div class="container">
             <h1>{{ evenement.nom }}</h1>
             <p>{{ evenement.description }}</p>
@@ -56,13 +59,15 @@
 
             <!-- BOUTON PAYER METTEZ LE OU VOUS VOULEZ -->
 
-            <button id="checkout-button">Payer</button>
+            <div>
+                <button id="checkout-button">Payer</button>
+            </div>
+
+
 
 
 
         </div>
-
-
 
 
     {% endblock %}
