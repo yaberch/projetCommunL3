@@ -10,5 +10,4 @@ class Search
      * @var String|null
      */
     public $value;
-
 }

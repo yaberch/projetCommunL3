@@ -37,6 +37,7 @@ class AccueilController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/accueil/{id}", name="accueil.show")
      */
@@ -62,10 +63,7 @@ class AccueilController extends AbstractController
             $commentaireAvis[] = $avisEvenements->getCommentaire();            
         }
 
-
-
-
-        // on créer un avis
+   // on créer un avis
         $avis = new Avis();
 
         //on recup le formulaire
@@ -117,12 +115,8 @@ class AccueilController extends AbstractController
      */
     public function success(String $paymentType, CartGestion $cart)
     {
-
         $cart -> createLessons($this->getUser(), $paymentType);
         return $this->render('index.html.twig', [
         ]);
     }
-
-
-
 }
