@@ -6,7 +6,17 @@
 
     <h1>Evenements de la semaine</h1>
 
-        {% for event in eventsList %}
+    {{ form_start(form) }}
+        <div class="form">
+            {{ form_row(form.value) }}
+        </div>
+        <div class="button">
+            <button class="btn btn-primary">Search</button>
+        </div>
+    {{ form_end(form) }}
+
+
+    {% for event in eventsList %}
             <table class="table">
                 <tr><td>{{ event.nom }}</td></tr>
                 <tr>
