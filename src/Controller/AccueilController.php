@@ -6,6 +6,7 @@ use App\Entity\Evenement;
 use App\Entity\Photo;
 use App\Entity\Video;
 use App\Entity\Avis;
+use App\Services\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route; 
@@ -93,5 +94,26 @@ class AccueilController extends AbstractController
             'idEvenement' => $id 
         ]);
     }
+
+    /**
+     * @Route("/create-checkout-session", name="checkout")
+     */
+    public function checkout(Stripe $stripe)
+    {
+        return $stripe -> checkout();
+    }
+
+    /**
+     * @Route("/success/{paymentType}", name="success")
+     */
+    public function success(String $paymentType, CartGestion $cart)
+    {
+
+        $cart -> createLessons($this->getUser(), $paymentType);
+        return $this->render('index.html.twig', [
+        ]);
+    }
+
+
 
 }
