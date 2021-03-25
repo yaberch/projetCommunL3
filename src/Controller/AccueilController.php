@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Entity\Photo;
+use App\Entity\Search;
 use App\Entity\Video;
 use App\Entity\Avis;
+use App\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route; 
@@ -18,14 +20,20 @@ class AccueilController extends AbstractController
     /**
      * @Route("/accueil", name="accueil")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $list = $this->getDoctrine()->getRepository(Evenement::class)->findAll();
+        $search = new Search();
+        $form = $this->createForm(SearchType::class, $search);
+        $form->handleRequest($request);
+
+        $list = $this->getDoctrine()->getRepository(Evenement::class)->findSearch($search);
 
         return $this->render('accueil/index.html.twig', [
-            'eventsList'=>$list
+            'eventsList'=>$list,
+            'form' => $form->createView()
         ]);
     }
+
 
     /**
      * @Route("/accueil/{id}", name="accueil.show")

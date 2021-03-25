@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Evenement;
+use App\Entity\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,22 @@ class EvenementRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Evenement::class);
+    }
+
+    /**
+     * @param Search $search
+     * @return array
+     */
+    public function findSearch(Search $search):array
+    {
+        $query=$this->createQueryBuilder('e');
+
+        if(!empty($search->value))
+        {
+            $query=$query->andWhere('e.nom LIKE :search')
+                ->setParameter('search', "%$search->value%");
+        }
+        return $query->getQuery()->getResult();
     }
 
     // /**
