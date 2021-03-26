@@ -10,9 +10,7 @@
     {% if app.user %}
     {% else %}
     {% endif %}
-
-
-
+                                <h1> Inscription</h1>
                                     <form id="contactForm" name="contactForm" class="contactForm" method="post">
                                         <div class="row pt-2">
                                             {{ form_start(form) }}
@@ -41,7 +39,7 @@
                                                     {{ form_widget(form.password.first) }}
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-12" >
                                                 <div class="form-group pb-2">
                                                     {{ form_widget(form.password.second) }}
                                                 </div>
@@ -49,7 +47,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group pb-2">
-                                                <input type="submit" value="inscription" class="btn btn-primary mb-2 mt-3">
+                                                <input type="submit" value="inscription" style="color:white" class="btn btn-primary mb-2 mt-3">
                                                 <div class="submitting"></div>
                                             </div>
                                         </div>

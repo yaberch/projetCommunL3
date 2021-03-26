@@ -111,10 +111,13 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: 'Bree Serif', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Bree Serif', "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     font-weight: 700;
-    letter-spacing: 1px
+    letter-spacing: 1px;
+    margin-top : 7%;
+    color: white;
+    text-align: center;
 }
 
 .img-centered {
@@ -432,18 +435,18 @@ fieldset[disabled] .btn-primary.active {
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary.active {
-    border-color: #F22613;
+    border-color: #00BFFF;
     color: #fff;
-    background-color:#F22613;;
+    background-color:#00BFFF;
 }
 
 .btn-red:hover,
 .btn-red:focus,
 .btn-red:active,
 .btn-red.active {
-    border-color: #dd0001;
+    border-color: #00BFFF;
     color: #fff;
-    background-color:#dd0001;;
+    background-color:#00BFFF;
 }
 
 .theme-accent-color, .navbar-default.navbar-shrink #navbar-social a:hover, .navbar-default .nav li a:hover, .navbar-default .nav li a:focus {
@@ -451,7 +454,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .theme-accent-color-bg {
-    background-color: #F22613;
+    background-color: #00BFFF
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -1209,7 +1212,7 @@ footer.white-wrapper .social-links li a {
     padding: 10px 30px;
     font-size: 14px;
     line-height: 1.42857143;
-    color: #555;
+    color: white;
     background-color: transparent;
     background-image: none;
     border: 2px solid;
@@ -1219,7 +1222,7 @@ footer.white-wrapper .social-links li a {
 }
 
 .form-control:focus, .form-control.col-md-4:focus {
-    border: 2px solid #F22613;
+    border: 2px solid #00BFFF;
     -webkit-box-shadow: none;
     box-shadow: none
 }

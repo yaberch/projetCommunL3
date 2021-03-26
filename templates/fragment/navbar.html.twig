@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand smoothie" href="index.html">THE <span class="theme-accent-color">NIGHTLAB</span></a>
+            <a class="navbar-brand smoothie" href="{{ path('home') }}">THE <span class="theme-accent-color">NIGHTLAB</span></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -34,4 +34,10 @@
     <!-- /.container-fluid -->
 
 </nav>
-
+<div id="search-wrapper">
+    <button type="button" class="close">×</button>
+    <form>
+        <input type="search" value="" placeholder="Enter Search Term" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>

@@ -1,50 +1,45 @@
 {% extends 'base.html.twig' %}
 
 
+
 {% block title %}Se connecter{% endblock %}
 
 
 {% block body %}
-
-
-
-
-
-
-
-                                    <h3>Connexion</h3>
-                                    <p class="mb-4">Bienvenue cher ami</p>
-                                    <div class="row mb-4">
-                                    </div>
-
-
+    <h1>Bienvenue cher ami</h1>
+                                    <h2>Connexion</h2>
+                                    <div class="row mb-4"></div>
                                     <form id="contactForm" name="contactForm" class="contactForm" method="post">
                                         <div class="row pt-2">
                                             <div class="col-md-12">
-                                                <div class="form-group pb-2">
-                                                    <input type="email" class="form-control" name="email" id="email" placeholder="xyz@something.com" value="{{ last_username }}">
+                                                <div class="form-group pb-2" >
+                                                    <input type="email" class="form-control" name="email" id="email" style="color:white" placeholder="xyz@something.com" value="{{ last_username }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group pb-2">
-                                                    <input type="password" class="form-control" name="password" id="password" placeholder="Mot de passe">
-                                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                                                    <input type="password" class="form-control" name="password" style="color:white" id="password" placeholder="Mot de passe">
+                                                    <input type="hidden" name="_csrf_token" style="color:white" value="{{ csrf_token('authenticate') }}" />
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group pb-2">
-                                                    <input type="submit" value="connexion" class="btn btn-primary mb-2 mt-3">
+                                                    <input type="submit" style="color:white" value="connexion" class="btn btn-primary mb-2 mt-3">
                                                     <div class="submitting"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </section>
+<div class="divLogin">
+    <div class = "divLoginIn">
+    <h1 class="h3 mb-3 font-weight-normal">Connexion :</h1>
+    <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    </div>
+</div>
+
 
 {% endblock %}
