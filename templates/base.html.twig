@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% block head %}
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
 
@@ -17,6 +18,7 @@
 
     {% include 'fragment/navbar.html.twig' %}
 
+    {% endblock %}
 
 </head>
 

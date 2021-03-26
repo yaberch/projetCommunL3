@@ -78,7 +78,15 @@ class RegistrationType extends AbstractType
                     'placeholder' => 'Télephone'
                 ],
                 'label' => false
+            ])
+            ->add('adresse', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Adresse'
+                ],
+                'label' => false
             ]);
+
 
 
     }
